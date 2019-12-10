@@ -2,7 +2,7 @@
 // import React from 'react';
 
 // { Component } is some cool syntax sugar
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 // Functional component - because it is a function
 // Their is also class components that can keep a record (store information)
@@ -13,20 +13,25 @@ import React, { Component } from 'react';
 
 // Give access to all React.Component functionalities
 // Every component that is class based need a render method
-class SearchBar extends Component { // or extends React.Component
+class SearchBar extends Component {
+  // or extends React.Component
   // When a state changes, it re-renders the component and its children
   // This is how you initiate states in a class based components/
   // constructor is a new ES6 term
   constructor(props) {
     super(props); // We are calling the React.Component constructor method
 
-    this.state = {term: ''};
-    this.captureText = this.captureText.bind(this);
+    this.state = { term: "" };
   }
-  captureText(){
-    console.log("captureText called",this.state.term);
+  captureText = () => {
+    console.log("captureText called", this.state.term);
     // this.setState({text});
     this.props.onSearchTermChange(this.state.term);
+  }
+  _handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      this.captureText();
+    }
   }
   render() {
     // onChange is a prop (property)
@@ -34,17 +39,34 @@ class SearchBar extends Component { // or extends React.Component
     // return <input onChange={this.onInputChange.bind(this)} />;
     // const onInputChange = _.debounce((term) => { this.onInputChange(term) }, 300);
     return (
-
-        <div className="search-bar col-md-12">
-          <div className="search_input col-md-10">
+      <div className="row">
+        <div className="search-bar col-md-8 offset-md-2">
+          {/* <div className="search_input col-md-10">
             <input
               value={this.state.term}
               onChange={event => this.onInputChange(event.target.value)}
-              />
-          </div>  
-            <div className="search_button col-md-2">
-               <button onClick={this.captureText} className="button_class">Search</button>
-            </div>        
+            />
+          </div>
+          <div className="search_button col-md-2">
+            <button onClick={this.captureText} className="button_class">
+              Search
+            </button>
+          </div> */}
+
+          <div className="input-group mb-3">
+            <input type="text" className="form-control" value={this.state.term} 
+              onChange={(e) => this.onInputChange(e.target.value)}
+              onKeyDown={this._handleKeyDown}
+              placeholder="Please search by keyword" aria-label="Search" aria-describedby="search"
+            />
+            <div className="input-group-append">
+              <button className="btn btn-outline-secondary" onClick={this.captureText} type="button">
+                {/* <span class="glyphicon glyphicon-search"></span> */}
+                Search
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     );
     // Controlled component has its value set by state
@@ -58,8 +80,8 @@ class SearchBar extends Component { // or extends React.Component
   }
   // Event handler
   onInputChange(term) {
-    console.log('onInputChange')
-    this.setState({term});
+    console.log("onInputChange");
+    this.setState({ term });
     // this.props.onSearchTermChange(term);
   }
 }

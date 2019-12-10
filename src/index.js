@@ -26,10 +26,8 @@ class App extends Component {
   }
 
   videoSearch(term) {
-    console.log("hehehe");
     this.setState({loader:true});
     YTSearch({key: API_KEY, term: term}, (videos) => {
-      console.log("hehehe2",videos[0]);
       this.setState({videos: videos,
                      selectedVideo: videos[0],
                      loader:false});
@@ -37,7 +35,11 @@ class App extends Component {
       // have the same name ---> this.setState({videos})
     });
   }
-
+  onSelectVideo = (selectedVideo) => {
+    this.setState({selectedVideo});
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
   render() {
 
     // Make a new function that can only be called once every 300 miliseconds
@@ -50,18 +52,18 @@ class App extends Component {
         
         {this.state.loader ? (
         <div>
-          loading
+         Loading...
         </div>) : (
         <div>
             {this.state.videos.length > 0 ? (
               <div>
                 <VideoDetail video={this.state.selectedVideo} />
                 <VideoList
-                  onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+                  onVideoSelect={this.onSelectVideo}
                   videos={this.state.videos} />
               </div>
             ) : (
-              <div className="col-md-8">please search something</div>
+               <div className="col-md-8"></div>
             )}
         </div>
         )}

@@ -20,12 +20,26 @@
 }
 .video-detail {
   margin: auto;
+  margin-bottom: 20px;
 }
 .video-detail .details {
   margin-top: 10px;
   padding: 10px;
   border: 1px solid #ddd;
   border-radius: 4px;
+}
+.details {
+  font-size: 14px;
+    color: #0c0c0c;
+}
+
+.media-heading {
+  padding: 5%;
+    font-size: 14px;
+    color: #0c0c0c;
+}
+.media-object {
+  width:100%;
 }
 .list-group {
   margin: auto;
@@ -35,6 +49,7 @@
   cursor: pointer;
   margin-top: 5px;
   margin-bottom: 5px;
+  border: none !important;
 }
 
 .list-group-item:hover {

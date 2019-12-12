@@ -3,7 +3,9 @@ import React from 'react';
 const VideoDetail = ({video}) => {
 
   if (!video) {
-    return <div>Loading1...</div>;
+    return <div className="offset-md-5 col-md-2">
+          Loading...
+      </div>
   }
 
   const videoId = video.id.videoId;
@@ -15,11 +17,11 @@ const VideoDetail = ({video}) => {
   return (
     <div className="video-detail col-md-10 offset-md-1">
       <div className="embed-responsive embed-responsive-16by9">
-        <iframe className="embed-responsive-item" src={url}></iframe>
+        <iframe className="embed-responsive-item" src={url} allowFullScreen="allowFullScreen" frameBorder="0"></iframe>
       </div>
       <div className="details">
-        <div>{video.snippet.title}</div>
-        <div>{video.snippet.description}</div>
+        <div className="video-title one-liner">{video.snippet.title}</div>
+        <div className="main-video-desc">{video.snippet.description}</div>
       </div>
     </div>
   );

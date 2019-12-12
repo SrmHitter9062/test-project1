@@ -3,7 +3,8 @@
 import React, {Component} from 'react'; // 'react' is literally the node_module name
 import ReactDOM from 'react-dom';
 import _ from 'lodash';
-import YTSearch from 'youtube-api-search';
+// import YTSearch from 'youtube-api-search';
+import YTSearch from './api/YTapi';
 
 
 import SearchBar from './components/search_bar';
@@ -17,31 +18,47 @@ class App extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      videos: [],
+      selectedVideo: null,
+      loader:false,
+      apiInit:false
+    };
+  }
+  componentDidMount(){
 
-    this.state = { videos: [],
-                   selectedVideo: null,
-                  loader:false};
-
-    // this.videoSearch('salman')
   }
 
   videoSearch(term) {
-    this.setState({loader:true});
-    YTSearch({key: API_KEY, term: term}, (videos) => {
+    this.setState({
+      loader:true,
+      videos:[],
+      selectedVideo:null
+    });
+    let apiOptions = {
+      key: API_KEY,
+      term: term,
+      maxResult:30
+    }
+    if(this.state.apiInit == false){
+      this.setState({apiInit:true});
+    }
+    YTSearch(apiOptions, (videos) => {
       this.setState({videos: videos,
                      selectedVideo: videos[0],
                      loader:false});
-      // Some ES6 syntactic sugar = key and property
-      // have the same name ---> this.setState({videos})
+
     });
   }
+  /**
+   * sets the selected video state in store object
+   */
   onSelectVideo = (selectedVideo) => {
     this.setState({selectedVideo});
     document.body.scrollTop = 0; // For Safari
     document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
   }
   render() {
-
     // Make a new function that can only be called once every 300 miliseconds
     const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
 
@@ -49,25 +66,36 @@ class App extends Component {
       
       <div>
         <SearchBar onSearchTermChange={videoSearch}/>
-        
-        {this.state.loader ? (
+
         <div>
-         Loading...
-        </div>) : (
-        <div>
-            {this.state.videos.length > 0 ? (
+
+          {this.state.loader ? (
+              <div className="offset-md-5 col-md-2">
+                    Loading...
+              </div>) : (
               <div>
-                <VideoDetail video={this.state.selectedVideo} />
-                <VideoList
-                  onVideoSelect={this.onSelectVideo}
-                  videos={this.state.videos} />
-              </div>
-            ) : (
-               <div className="col-md-8"></div>
-            )}
+                    {this.state.videos.length > 0 ? (
+                      <div>
+                        <VideoDetail video={this.state.selectedVideo} />
+                        <VideoList
+                          onVideoSelect={this.onSelectVideo}
+                          videos={this.state.videos} />
+                      </div>
+                    ) : (
+                      <div>
+                        {this.state.apiInit ? (
+                          <div className="offset-md-5 col-md-2">
+                              No Results
+                          </div>)
+                     : null}
+                    
+                      </div>
+                    )}
+              </div>   
+                  
+              )}
         </div>
-        )}
-      
+    
     </div>
     );
   }

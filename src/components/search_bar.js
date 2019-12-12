@@ -24,7 +24,6 @@ class SearchBar extends Component {
     this.state = { term: "" };
   }
   captureText = () => {
-    console.log("captureText called", this.state.term);
     // this.setState({text});
     this.props.onSearchTermChange(this.state.term);
   }
@@ -41,17 +40,6 @@ class SearchBar extends Component {
     return (
       <div className="row">
         <div className="search-bar col-md-8 offset-md-2">
-          {/* <div className="search_input col-md-10">
-            <input
-              value={this.state.term}
-              onChange={event => this.onInputChange(event.target.value)}
-            />
-          </div>
-          <div className="search_button col-md-2">
-            <button onClick={this.captureText} className="button_class">
-              Search
-            </button>
-          </div> */}
 
           <div className="input-group mb-3">
             <input type="text" className="form-control" value={this.state.term} 
@@ -80,7 +68,6 @@ class SearchBar extends Component {
   }
   // Event handler
   onInputChange(term) {
-    console.log("onInputChange");
     this.setState({ term });
     // this.props.onSearchTermChange(term);
   }

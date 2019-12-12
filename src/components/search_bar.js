@@ -38,7 +38,7 @@ class SearchBar extends Component {
     // return <input onChange={this.onInputChange.bind(this)} />;
     // const onInputChange = _.debounce((term) => { this.onInputChange(term) }, 300);
     return (
-      <div className="row">
+      <div className="row header-row">
         <div className="search-bar col-md-8 offset-md-2">
 
           <div className="input-group mb-3">

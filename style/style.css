@@ -1,3 +1,6 @@
+.header-row {
+  box-shadow: 0px 3px 50px rgba(0, 0, 0, 0.16);
+}
 .search-bar {
   margin: 20px;
   text-align: center;  
@@ -10,7 +13,9 @@
     margin-right: 30px;
     width: 90.77%;
 }
-
+.search-bar>.input-group{
+  margin-bottom: 0px !important;
+}
 .search-bar input {
   width: 75%;
 }
@@ -37,11 +42,12 @@
   padding-top: 4%;
     font-size: 14px;
     color: #0c0c0c;
-    padding-left: 10px;
-    padding-right: 5px;
+    padding-left: 15px;
+    padding-right: 10px;
 }
 .media-object {
   width:100%;
+  border-radius: 12px;
 }
 .list-group {
   margin: auto;

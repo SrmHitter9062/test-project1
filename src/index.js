@@ -125,4 +125,4 @@ class App extends Component {
 // React.createElement(_temporalAssertDefined(App, ""....)
 // We are making an instance of an App (self closing tag) and selecting a target
 // DOM node (container - check index.html)
-ReactDOM.render(<App />, document.querySelector('.container'));
+ReactDOM.render(<App />, document.querySelector('.container-fluid'));

@@ -4,7 +4,7 @@ import React from 'react';
 // What this says is that props has a property called video
 // get it and create a new variable with it
 const VideoListItem = ({video, onVideoSelect}) => {
-  const imageUrl = video.snippet.thumbnails.medium.url;
+  const imageUrl = video.snippet.thumbnails.medium.url || video.snippet.thumbnails.default.url;
   return (
       <div onClick={() => onVideoSelect(video)} className="list-group-item col-md-4">
         <div className="video-list media row">
@@ -12,7 +12,7 @@ const VideoListItem = ({video, onVideoSelect}) => {
             <img className="media-object" src={imageUrl} />
           </div>
           <div className="media-body" >
-            <div className="media-heading video-title two-liner"> {video.snippet.title} </div>
+            <div className="media-heading video-title two-liner" title={video.snippet.title}> {video.snippet.title} </div>
           </div>
         </div>
       </div>

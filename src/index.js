@@ -5,14 +5,11 @@ import ReactDOM from 'react-dom';
 import _ from 'lodash';
 // import YTSearch from 'youtube-api-search';
 import YTSearch from './api/YTapi';
-
+import apiConfig from './api/apiConfig';
 
 import SearchBar from './components/search_bar';
 import VideoList from './components/video_list';
 import VideoDetail from './components/video_detail';
-
-// const API_KEY = 'AIzaSyDdMP5aynBKWjaqHiDZJlDU7jGMdEJvWwU';
-const API_KEY = "AIzaSyA4O2v7iQaUc5nZePhqYwPk9Zmea8b87BI";
 
 class App extends Component {
 
@@ -25,9 +22,7 @@ class App extends Component {
       apiInit:false
     };
   }
-  componentDidMount(){
-
-  }
+  componentDidMount(){}
 
   videoSearch(term) {
     this.setState({
@@ -36,9 +31,9 @@ class App extends Component {
       selectedVideo:null
     });
     let apiOptions = {
-      key: API_KEY,
+      key: apiConfig.YTApi.apiKey,
       term: term,
-      maxResult:30
+      maxResult:apiConfig.YTApi.maxCount
     }
     if(this.state.apiInit == false){
       this.setState({apiInit:true});
@@ -55,8 +50,15 @@ class App extends Component {
    */
   onSelectVideo = (selectedVideo) => {
     this.setState({selectedVideo});
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+    const scrollToTop = () => {
+      const c = document.documentElement.scrollTop || document.body.scrollTop;
+      if (c > 0) {
+        window.requestAnimationFrame(scrollToTop);
+        window.scrollTo(0, c - c / 8);
+      }
+    };
+    scrollToTop();
+    
   }
   render() {
     // Make a new function that can only be called once every 300 miliseconds
@@ -70,7 +72,7 @@ class App extends Component {
         <div>
 
           {this.state.loader ? (
-              <div className="offset-md-5 col-md-2">
+              <div className="offset-md-5 col-md-2 loading-msg">
                     Loading...
               </div>) : (
               <div>
@@ -84,8 +86,8 @@ class App extends Component {
                     ) : (
                       <div>
                         {this.state.apiInit ? (
-                          <div className="offset-md-5 col-md-2">
-                              No Results
+                          <div className="offset-md-5 col-md-2 no-result-msg">
+                              OOPS! No Results Found
                           </div>)
                      : null}
                     

@@ -23,10 +23,15 @@ class SearchBar extends Component {
 
     this.state = { term: "" };
   }
+  /**
+   * recieves the Typed text and sets in state
+   */
   captureText = () => {
-    // this.setState({text});
     this.props.onSearchTermChange(this.state.term);
   }
+  /**
+   * Handling for enter key after typing text
+   */
   _handleKeyDown = (e) => {
     if (e.key === 'Enter') {
       this.captureText();
@@ -69,7 +74,6 @@ class SearchBar extends Component {
   // Event handler
   onInputChange(term) {
     this.setState({ term });
-    // this.props.onSearchTermChange(term);
   }
 }
 
